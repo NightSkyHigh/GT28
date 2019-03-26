@@ -1,13 +1,33 @@
 #mapid {
-  height: 400px;
-  width: 400px;
-}
-
-#mapframe {
+  height: 600px;
+  width: 800px;
 }
 
 #titleFrame {
   font-size: 20px;
   font-weight: bold;
   color: red;
+  text-align: center;
+  text-shadow: 5px;
+}
+
+#outterFrame {
+  display: flex;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+#locationFrame {
+  flex: 0.5;
+  text-align: right;
+  margin-right: 20px;
+  font-size: 20px;
+}
+
+#mapFrame {
+  flex: 0.5;
+}
+
+li {
+  list-style: none;
 }
