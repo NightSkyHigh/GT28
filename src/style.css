@@ -1,0 +1,13 @@
+#mapid {
+  height: 400px;
+  width: 400px;
+}
+
+#mapframe {
+}
+
+#titleFrame {
+  font-size: 20px;
+  font-weight: bold;
+  color: red;
+}
