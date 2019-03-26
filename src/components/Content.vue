@@ -1,8 +1,8 @@
 <template>
   <v-app id="inspire">
     <v-content>
-        <v-container fluid fill-height>
-          <v-layout justify-center align-center>
+        <v-container fluid >
+          <v-layout justify-left align-left>
             <v-flex text-xs-center>
               <div id="mapid"></div>
             </v-flex>
@@ -49,10 +49,11 @@
 </script>
 
 <style>
-
-#mapid{
+#mapid {
   height: 500px;
   width: 800px;
   z-index: 1;
+  border: 2px solid #0288D1;
+  border-radius: 12px;
 }
 </style>
