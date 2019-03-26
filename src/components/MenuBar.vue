@@ -13,22 +13,27 @@
     <v-list dense>
       <v-list-tile @click="">
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="$emit('setCoords(59.91, 10.74)')">Oslo</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" @click="setCoords(52.52, 13.40, 8)">Berlin</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile @click="">
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" @click="setCoords(51.50, -0.11)">London</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" @click="setCoords(51.50, -0.11, 8)">London</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile @click="">
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" @click="setCoords(55.75, 37.61)">Moscow</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" @click="setCoords(55.75, 37.61, 8)">Moscow</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile @click="">
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" @click="setCoords(52.52, 13.40)">Berlin</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="$emit('setCoords(59.91, 10.74, 8)')">Oslo</a></v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile @click="">
+        <v-list-tile-content>
+          <v-list-tile-title><a href="#" @click="setCoords(45.86, 25.78, 8)">Sfântu-Gheorghe</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
@@ -49,9 +54,10 @@
       source: String
     },
     methods: {
-      setCoords: function(lat, long) {
+      setCoords: function(lat, long, zoom) {
         this.lat = lat,
-        this.long = long
+        this.long = long,
+        this.zoom = zoom
         getMap();
       }
     }

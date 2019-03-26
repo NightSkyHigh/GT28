@@ -20,14 +20,15 @@
       map: null,
       tileLayer: null,
       lat: 52.25,
-      long: 21.00
+      long: 21.00,
+      zoom: 4.2
     }),
     mounted(){
       this.getMap();
     },
     methods: {
       getMap: function() {
-        this.map = L.map('mapid').setView([this.lat,this.long], 4.2);
+        this.map = L.map('mapid').setView([this.lat,this.long], this.zoom);
 
         this.tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
           maxZoom: 18,
@@ -36,10 +37,11 @@
         })
         this.tileLayer.addTo(this.map);
 
-        var osloMarker = L.marker([59.91, 10.74]).addTo(this.map);
         var berlinMarker = L.marker([52.52, 13.40]).addTo(this.map);
         var londonMarker = L.marker([51.50, -0.11]).addTo(this.map);
         var moscowMarker = L.marker([55.75, 37.61]).addTo(this.map);
+        var osloMarker = L.marker([59.91, 10.74]).addTo(this.map);
+        var sfântugheorgheMarker = L.marker([45.86, 25.78]).addTo(this.map);
       }
     },
     props: {
