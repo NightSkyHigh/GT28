@@ -11,7 +11,7 @@
           <v-icon>home</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title><a href="#">Oslo</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" @click="setCoords(59.91, 10.74)">Oslo</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile @click="">
@@ -19,7 +19,7 @@
           <v-icon>home</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title><a href="#">London</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" @click="setCoords(51.50, -0.11)">London</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile @click="">
@@ -27,7 +27,7 @@
           <v-icon>home</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title><a href="#">Moscow</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" @click="setCoords(55.75, 37.61)">Moscow</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile @click="">
@@ -35,7 +35,7 @@
           <v-icon>home</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" @click="getCoords">Berlin</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" @click="setCoords(52.52, 13.40)">Berlin</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
@@ -54,18 +54,17 @@
       drawer: null,
       maxZoom: 18,
       id: 'mapbox.streets',
-      accessToken: 'pk.eyJ1Ijoia2FhYXNlbiIsImEiOiJjanRwZ2tmY2YwMDJnNGRxZGplMHZtdDJ3In0.TzTQ3C8LMcW8A1LIgyNYBg',
-      latitude: 0,
-      longtitude: 0,
+      accessToken: 'pk.eyJ1Ijoia2FhYXNlbiIsImEiOiJjanRwZ2tmY2YwMDJnNGRxZGplMHZtdDJ3In0.TzTQ3C8LMcW8A1LIgyNYBg'
     }),
     props: {
       source: String
     },
     methods: {
-      getCoords() {
-        url = "https://api.exchangeratesapi.io/latest?base=" + this.key
-        this.getCoords()
-      },
+      setCoords: function(lat, long) {
+        this.lat = lat,
+        this.long = long
+        getMap();
+      }
     }
   }
 </script>
