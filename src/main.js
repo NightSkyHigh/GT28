@@ -1,23 +1,11 @@
 import Vue from 'vue'
+import './plugins/vuetify'
 import App from './App.vue'
+import 'vuetify/dist/vuetify.min.css'
+
+
 
 Vue.config.productionTip = false
-var app = new Vue({
-  el: '#app',
-  data() {
-      return{
-
-          url: "https://www.yr.no/sted/Norge/Oslo/Oslo/Oslo/varsel.xml",
-
-      }
-  }, 
-  
-  methods: {
-    
-  }
-
-/*
 new Vue({
   render: h => h(App),
-}).$mount('#app') 
-*/
+}).$mount('#app')
