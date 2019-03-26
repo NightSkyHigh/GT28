@@ -1,5 +1,4 @@
 <template>
-
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
@@ -17,8 +16,8 @@
     </v-toolbar>
 
     <v-content>
-      <Content/>
       <MenuBar/>
+      <Content/>
       <Footer/>
     </v-content>
   </v-app>
