@@ -2,22 +2,13 @@
   <v-app id="inspire">
     <v-content>
         <v-container fluid fill-height>
-          <v-layout justify-center align-center>
+          <v-layout
+            justify-center
+            align-center
+          >
             <v-flex text-xs-center>
-              <v-tooltip left>
-                <template v-slot:activator="{ on }">
-                  <v-btn :href="source" icon large target="_blank" v-on="on">
-                    <v-icon large>code</v-icon>
-                  </v-btn>
-                </template>
-              </v-tooltip>
-              <v-tooltip right>
-                <template v-slot:activator="{ on }">
-                  <v-btn icon large href="https://codepen.io/johnjleider/pen/rJdVMq" target="_blank" v-on="on">
-                    <v-icon large>mdi-codepen</v-icon>
-                  </v-btn>
-                </template>
-              </v-tooltip>
+              <h1>wegaseg</h1>
+              <div id="mapid"></div>
             </v-flex>
           </v-layout>
         </v-container>
@@ -26,14 +17,37 @@
 </template>
 
 <script>
-  import MenuBar from './MenuBar'
-  import Map from '../map.js'
   export default {
     data: () => ({
-      drawer: null
+      drawer: null,
+      map: null,
+      tileLayer: null
     }),
+    methods: {
+      getMap: function(){
+        this.map = L.map('mapid').setView([52.25, 21.00], 4.2);
+
+        this.tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox.streets',
+          accessToken: 'pk.eyJ1Ijoia2FhYXNlbiIsImEiOiJjanRwZ2tmY2YwMDJnNGRxZGplMHZtdDJ3In0.TzTQ3C8LMcW8A1LIgyNYBg'
+        })
+        this.tileLayer.addTo(this.map);
+      }
+    },
+    mounted(){
+      this.getMap();
+    },
+
     props: {
       source: String
     }
   }
 </script>
+<style>
+#mapid{
+  height: 400px;
+}
+</style>
+
