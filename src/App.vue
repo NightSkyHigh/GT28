@@ -1,4 +1,5 @@
 <template>
+
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
@@ -16,18 +17,24 @@
     </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <Content/>
+      <MenuBar/>
+      <Footer/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import MenuBar from './components/MenuBar'
+import Footer from './components/Footer'
+import Content from './components/Content'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Content,
+    MenuBar,
+    Footer
   },
   data () {
     return {
