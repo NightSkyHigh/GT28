@@ -54,20 +54,39 @@
         <v-layout justify-left align-left>
           <v-flex text-xs-center>
             <div id="infoAndMapContainer">
-              <h3>Forecast</h3>
               <div id="infoContainer">
                 <div id="leftInfo">
-                  <p >Today</p>
-                  <img src="../images/logo.png" height="50px" width="50px"></img>
+                  <div id="day">
+                    <p>Tday</p>
+                  </div>
+                  <div id="daytemp">
+                    <p class="temperatureColor">{{valueList[0]}}</p>
+                  </div>
+                  <div id="dayicon">
+                    <p><img :src="forecastList[0]" height="50px" width="50px"/></p>
+                  </div>
                 </div>
                 <div id="middleInfo">
-                  <p>{{getNameOfDay(1)}}</p>
-                  <img src="../images/logo.png" height="50px" width="50px"></img>
+                  <div id="day">
+                    <p>Tmrw:</p>
+                  </div>
+                  <div id="daytemp">
+                    <p class="temperatureColor">{{valueList[1]}}</p>
+                  </div>
+                  <div id="dayicon">
+                    <p><img :src="forecastList[1]" height="50px" width="50px"/></p>
+                  </div>
                 </div>
                 <div id="rightInfo">
-                  <p>{{getNameOfDay(2)}}</p>
-                  <p>{{valueList[2]}}</p>
-                  <img src="../images/logo.png" height="50px" width="50px"></img>
+                  <div id="day">
+                    <p>Datmrw</p>
+                  </div>
+                  <div id="daytemp">
+                    <p class="temperatureColor">{{valueList[2]}}</p>
+                  </div>
+                  <div id="dayicon">
+                    <p><img :src="forecastList[2]" height="50px" width="50px"/></p>
+                  </div>
                 </div>
               </div>
               <div id="mapid"></div>
@@ -95,9 +114,11 @@ export default {
     long: 21.00,
     zoom: 3.9,
 
-      events: null,
-      url: 'http://api.apixu.com/v1/forecast.json?key=08a3949c85ea4120ac195310192703&q=Oslo&days=3',
-      valueList: []
+    events: null,
+    url: 'http://api.apixu.com/v1/forecast.json?key=08a3949c85ea4120ac195310192703&q=Oslo&days=3',
+    valueList: [],
+    forecastList: [],
+    dayList: []
   }),
   props: {
     source: String
@@ -130,16 +151,18 @@ export default {
         })
         this.tileLayer.addTo(this.map);
       },
-          getData: function(){
-            axios
-              .get(this.url)
-              .then(response => {
-                this.events = response.data.forecast.forecastday;
-                for(let i = 0; i < response.data.forecast.forecastday.length; i++){
-                  this.valueList.push(response.data.forecast.forecastday[i].day.maxtemp_c);
-                }
 
-            }).catch(error => console.log(error))
+      getData: function() {
+        axios
+          .get(this.url)
+          .then(response => {
+            this.events = response.data.forecast.forecastday;
+            for(let i = 0; i < 3; i++){
+              this.valueList.push(response.data.forecast.forecastday[i].day.maxtemp_c);
+              this.forecastList.push(response.data.forecast.forecastday[i].day.condition.icon)
+            }
+
+        }).catch(error => console.log(error))
       },
       getNameOfDay : function (offSet) {
           let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -174,21 +197,24 @@ export default {
   display: flex;
 }
 
-#info {
-  height: 200px;
-  width: 800px;
-  border: 2px solid #0288D1;
-  border-radius: 12px;
-  flex: 1 100%;
-  border: 2px solid #0288D1;
-  border-radius: 12px;
-}
-
 #leftInfo, #middleInfo, #rightInfo {
   border: 2px solid #0288D1;
   border-radius: 12px;
-  flex: 1 33.33%;
+  width: 33.33%;
   margin: 2px;
+
+}
+
+#day {
+  width: 33.33%;
+}
+
+#daytemp {
+  width: 33.33%;
+}
+
+#dayicon {
+  width: 33.33%;
 }
 
 #mapid {
@@ -223,5 +249,10 @@ h3 {
 
 p {
   font-weight: bold;
+}
+
+.temperatureColor {
+  color: red;
+  font-weight: bolder;
 }
 </style>
