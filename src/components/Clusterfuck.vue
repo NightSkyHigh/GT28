@@ -151,6 +151,7 @@ export default {
         })
         this.tileLayer.addTo(this.map);
       },
+
       getData: function() {
         axios
           .get(this.url)
@@ -162,10 +163,16 @@ export default {
             }
 
         }).catch(error => console.log(error))
+      },
+      getNameOfDay : function (offSet) {
+          let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+          let dt = new Date();
+          return weekday[dt.getDay()+offSet];
       }
     },
     created(){
       this.getData();
+      this.getNameOfDay();
     },
     mounted(){
       this.getMap();
