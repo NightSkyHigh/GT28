@@ -23,31 +23,6 @@ export default {
   name: 'App',
   components: {
     Clusterfuck
-  },
-  data () {
-    return {
-      events: null,
-      url: 'https://api.met.no/weatherapi/locationforecast/1.9/?lat=60.10&lon=9.58',
-      valueList: null
-    }
-  },
-  methods: {
-getData: function(){
-      var parseString = require('xml2js').parseString;
-      var that = this;
-      axios.get(this.url)
-        .then(response => {
-          parseString(response.data, function (err, result) {
-            that.events = result.weatherdata.product[0].time// nothing happens
-            //for(let i = 0; i < 6; i++){
-              //valueList.push()
-           // }
-          });
-        })
-      }
     },
-    created(){
-      this.getData();
-    }
   }
 </script>
