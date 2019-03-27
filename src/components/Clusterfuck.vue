@@ -1,17 +1,20 @@
 <template>
   <v-app id="inspire">
+    <!-- Our toolbar is the top bar. It also has the dropdown menu-button and our "logo" as well -->
     <v-toolbar color="light-blue darken-2" dark fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <img id="logo" src="../images/logo.png"></img>
       <v-toolbar-title>Our Weather Service</v-toolbar-title>
     </v-toolbar>
+    <!-- The navigation-drawer is the flexible menu on the left hand side (on large screens) and the contents of the dropdown-menu on smaller screens
+    There's alot of v-list tags, which came with the template -->
     <v-navigation-drawer
-    v-model="drawer"
-    fixed
-    app
-    width="250"
-    >
+    v-model="drawer" fixed app width="250">
     <v-list dense>
+      <!-- The first element/link/button of the menu is the one that takes us back to the view we started out with. It calls a method
+      called setCoords with latitude, longtitude and zoom-level.
+      As you can see, we've also added @click.stop="drawer = !drawer" which makes the menu hide when you change press the link.
+      The reason behind this desicion is that it looks better on the mobile, although it does not look better on larger screens -->
       <v-list-tile @click="">
         <v-list-tile-content>
           <v-list-tile-title><a href="#" v-on:click="setCoords(52.21, 21.00, 3.9)" @click.stop="drawer = !drawer">Home</a></v-list-tile-title>
@@ -49,15 +52,17 @@
       </v-list-tile>
     </v-list>
   </v-navigation-drawer>
+  <!-- v-content is where "everything else" is displayed. Map, temperatures, day, weather-icons all gets displayed withing v-content. -->
   <v-content>
       <v-container fluid >
         <v-layout justify-left align-left>
           <v-flex text-xs-center>
+            <!-- Multiple levels of div's, which adds multiple layers of customization-->
             <div id="infoAndMapContainer">
               <div id="infoContainer">
                 <div id="leftInfo">
                   <div id="day">
-                    <p>Tday</p>
+                    <p>Today</p>
                   </div>
                   <div id="daytemp">
                     <p class="temperatureColor">{{valueList[0]}}</p>
@@ -68,7 +73,7 @@
                 </div>
                 <div id="middleInfo">
                   <div id="day">
-                    <p>Tmrw:</p>
+                    <p>{{ getNameOfDay(1) }}</p>
                   </div>
                   <div id="daytemp">
                     <p class="temperatureColor">{{valueList[1]}}</p>
@@ -79,7 +84,7 @@
                 </div>
                 <div id="rightInfo">
                   <div id="day">
-                    <p>Datmrw</p>
+                    <p>{{ getNameOfDay(2) }}</p>
                   </div>
                   <div id="daytemp">
                     <p class="temperatureColor">{{valueList[2]}}</p>
@@ -124,6 +129,9 @@ export default {
     source: String
   },
   methods: {
+    /** getMap gets run when you first load the page. It get's the default paramters set in data().
+    *   This is basically just copy-pasted from Mapbox.
+    */
       getMap: function() {
         this.map = L.map('mapid').setView([this.lat,this.long], this.zoom);
 
@@ -141,6 +149,9 @@ export default {
         var portelizabethMarker = L.marker([-33.96, 25.58]).addTo(this.map);
         var sfântugheorgheMarker = L.marker([45.86, 25.78]).addTo(this.map);
       },
+      /** setCoords gets called from the buttons in the navigation-drawer with the given parameters.
+      *   Only difference from getMap is that we work on the existing map, and not a new one.
+      */
       setCoords: function(lat, long, zoom) {
         this.map.flyTo([lat,long], zoom);
 
@@ -151,7 +162,7 @@ export default {
         })
         this.tileLayer.addTo(this.map);
       },
-
+      /** getData gets the data (temperatures and icons) from api.apixu.com */
       getData: function() {
         axios
           .get(this.url)
@@ -164,6 +175,7 @@ export default {
 
         }).catch(error => console.log(error))
       },
+      /** getNameOfDay creates an array of days and returns the weekday the user asks for  */
       getNameOfDay : function (offSet) {
           let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
           let dt = new Date();
@@ -189,7 +201,7 @@ export default {
 }
 
 #infoContainer {
-  height: 100px;
+  height: 75px;
   width: 800px;
   margin-bottom: 2px;
   flex: 1 100%;
@@ -202,7 +214,6 @@ export default {
   border-radius: 12px;
   width: 33.33%;
   margin: 2px;
-
 }
 
 #day {
@@ -215,6 +226,8 @@ export default {
 
 #dayicon {
   width: 33.33%;
+  position: absolute;
+  top: 45px;
 }
 
 #mapid {
