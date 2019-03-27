@@ -13,27 +13,27 @@
     <v-list dense>
       <v-list-tile @click="">
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="setCoords(52.52, 13.40, 8)">Berlin</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="setCoords(52.52, 13.40, 9)">Berlin</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile @click="">
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="setCoords(51.50, -0.11, 8)">London</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="setCoords(51.50, -0.11, 9)">London</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile @click="">
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="setCoords(55.75, 37.61, 8)">Moscow</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="setCoords(55.75, 37.61, 9)">Moscow</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile @click="">
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="setCoords(59.91, 10.74, 8)">Oslo</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="setCoords(59.91, 10.74, 9)">Oslo</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile @click="">
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="setCoords(45.86, 25.78, 8)">Sfântu-Gheorghe</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="setCoords(45.86, 25.78, 12)">Sfântu-Gheorghe</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
@@ -87,10 +87,14 @@ export default {
         var sfântugheorgheMarker = L.marker([45.86, 25.78]).addTo(this.map);
       },
       setCoords: function(lat, long, zoom) {
-        this.lat = lat,
-        this.long = long,
-        this.zoom = zoom
-        this.getMap();
+        this.map.setView([lat,long], zoom);
+
+        this.tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+          maxZoom: 18,
+          id: 'mapbox.light',
+          accessToken: 'pk.eyJ1Ijoia2FhYXNlbiIsImEiOiJjanRwZ2tmY2YwMDJnNGRxZGplMHZtdDJ3In0.TzTQ3C8LMcW8A1LIgyNYBg'
+        })
+        this.tileLayer.addTo(this.map);
       }
     },
     mounted(){
