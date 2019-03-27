@@ -11,24 +11,18 @@
     </v-btn>
     </v-toolbar>
     <v-content>
-      <Content/>
-      <MenuBar/>
-      <Footer/>
+      <Clusterfuck/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import MenuBar from './components/MenuBar'
-import Footer from './components/Footer'
-import Content from './components/Content'
+import Clusterfuck from './components/Clusterfuck'
 
 export default {
   name: 'App',
   components: {
-    Content,
-    MenuBar,
-    Footer
+    Clusterfuck
   },
   data () {
     return {
