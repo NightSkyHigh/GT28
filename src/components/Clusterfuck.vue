@@ -9,11 +9,12 @@
     v-model="drawer"
     fixed
     app
+    width="250"
     >
     <v-list dense>
       <v-list-tile @click="">
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="setCoords(52.21, 21.00, 4.2)" @click.stop="drawer = !drawer">Reset map</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="setCoords(52.21, 21.00, 3.9)" @click.stop="drawer = !drawer">Reset map</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile @click="">
@@ -91,7 +92,7 @@ export default {
     tileLayer: null,
     lat: 52.25,
     long: 21.00,
-    zoom: 4.2
+    zoom: 3.9
   }),
   props: {
     source: String
@@ -136,6 +137,7 @@ export default {
   display: flex;
   flex-flow: row wrap;
   margin: 0 0 0 0;
+  padding: 0 0 0 0;
 }
 
 #infoContainer {
@@ -160,12 +162,12 @@ export default {
 #leftInfo, #middleInfo, #rightInfo {
   border: 2px solid #0288D1;
   border-radius: 12px;
-  flex: 1 100%;
+  flex: 1 33.33%;
   margin: 2px;
 }
 
 #mapid {
-  height: 400px;
+  height: 500px;
   width: 800px;
   z-index: 1;
   border: 2px solid #0288D1;
