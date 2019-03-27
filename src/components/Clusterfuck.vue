@@ -12,39 +12,39 @@
     width="250"
     >
     <v-list dense>
-      <v-list-tile @click="">
+      <v-list-tile >
         <v-list-tile-content>
           <v-list-tile-title><a href="#" v-on:click="setCoords(52.21, 21.00, 3.9)" @click.stop="drawer = !drawer">Home</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-tile @click="">
+      <v-list-tile>
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="setCoords(52.52, 13.40, 9)" @click.stop="drawer = !drawer">Berlin, Germany</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="setCoords(52.52, 13.40, 9)" @click="changeCity('Berlin')" >Berlin, Germany</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-tile @click="">
+      <v-list-tile>
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="setCoords(51.50, -0.11, 9)" @click.stop="drawer = !drawer">London, England</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="setCoords(51.50, -0.11, 9)" @click="changeCity('London')">London, England</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-tile @click="">
+      <v-list-tile>
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="setCoords(55.75, 37.61, 9)" @click.stop="drawer = !drawer">Moscow, Russia</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="setCoords(55.75, 37.61, 9)" @click="changeCity('Moscow')">Moscow, Russia</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-tile @click="">
+      <v-list-tile>
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="setCoords(59.91, 10.74, 9)" @click.stop="drawer = !drawer">Oslo, Norway</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="setCoords(59.91, 10.74, 9)" @click="changeCity('Oslo')">Oslo, Norway</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-tile @click="">
+      <v-list-tile>
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="setCoords(-33.96, 25.58, 12)" @click.stop="drawer = !drawer">Port Elizabeth, South Africa</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="setCoords(-33.96, 25.58, 12)" @click="changeCity('Port Elizabeth')">Port Elizabeth, South Africa</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-tile @click="">
+      <v-list-tile>
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="setCoords(45.86, 25.78, 12)" @click.stop="drawer = !drawer">Sfântu-Gheorghe, Romania</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="setCoords(45.86, 25.78, 12)" @click="changeCity('Sfântu-Gheorghe')">Sfântu-Gheorghe, Romania</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
@@ -57,10 +57,10 @@
               <div id="infoContainer">
                 <div id="leftInfo">
                   <div id="day">
-                    <p>Tday</p>
+                    <p>Today</p>
                   </div>
                   <div id="daytemp">
-                    <p class="temperatureColor">{{valueList[0]}}</p>
+                    <p class="temperatureColor">{{valueList[0]}}C</p>
                   </div>
                   <div id="dayicon">
                     <p><img :src="forecastList[0]" height="50px" width="50px"/></p>
@@ -68,10 +68,10 @@
                 </div>
                 <div id="middleInfo">
                   <div id="day">
-                    <p>Tmrw:</p>
+                    <p>{{getNameOfDay(1)}}</p>
                   </div>
                   <div id="daytemp">
-                    <p class="temperatureColor">{{valueList[1]}}</p>
+                    <p class="temperatureColor">{{valueList[1]}}C</p>
                   </div>
                   <div id="dayicon">
                     <p><img :src="forecastList[1]" height="50px" width="50px"/></p>
@@ -79,10 +79,10 @@
                 </div>
                 <div id="rightInfo">
                   <div id="day">
-                    <p>Datmrw</p>
+                    <p>{{getNameOfDay(2)}}</p>
                   </div>
                   <div id="daytemp">
-                    <p class="temperatureColor">{{valueList[2]}}</p>
+                    <p class="temperatureColor">{{valueList[2]}}C</p>
                   </div>
                   <div id="dayicon">
                     <p><img :src="forecastList[2]" height="50px" width="50px"/></p>
@@ -168,6 +168,13 @@ export default {
           let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
           let dt = new Date();
           return weekday[dt.getDay()+offSet];
+      },
+      changeCity: function(cityName){
+        this.valueList = [];
+        this.forecastList = [];
+        this.url = 'http://api.apixu.com/v1/forecast.json?key=08a3949c85ea4120ac195310192703&q='+cityName+'&days=3';
+        this.drawer = !this.drawer;
+        this.getData();
       }
     },
     created(){
@@ -187,36 +194,31 @@ export default {
   margin: 0 0 0 0;
   padding: 0 0 0 0;
 }
-
 #infoContainer {
-  height: 100px;
+  height: 85px;
   width: 800px;
   margin-bottom: 2px;
   flex: 1 100%;
   opacity: 0.8;
   display: flex;
 }
-
 #leftInfo, #middleInfo, #rightInfo {
   border: 2px solid #0288D1;
   border-radius: 12px;
   width: 33.33%;
   margin: 2px;
-
 }
-
 #day {
   width: 33.33%;
 }
-
 #daytemp {
   width: 33.33%;
 }
-
 #dayicon {
   width: 33.33%;
+  position: absolute;
+  top: 45px;
 }
-
 #mapid {
   height: 500px;
   width: 800px;
@@ -225,32 +227,26 @@ export default {
   border-radius: 12px;
   flex: 1 100%;
 }
-
 #logo {
   height: 60px;
   width: 60px;
 }
-
 a {
   text-decoration: none;
   text-transform: uppercase;
   display: flex;
   justify-content: flex-end;
 }
-
 a:hover {
   color: #000000;
   cursor: pointer;
 }
-
 h3 {
   font-size: 20px;
 }
-
 p {
   font-weight: bold;
 }
-
 .temperatureColor {
   color: red;
   font-weight: bolder;
