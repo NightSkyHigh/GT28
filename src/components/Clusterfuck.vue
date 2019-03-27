@@ -14,7 +14,7 @@
     <v-list dense>
       <v-list-tile @click="">
         <v-list-tile-content>
-          <v-list-tile-title><a href="#" v-on:click="setCoords(52.21, 21.00, 3.9)" @click.stop="drawer = !drawer">Reset map</a></v-list-tile-title>
+          <v-list-tile-title><a href="#" v-on:click="setCoords(52.21, 21.00, 3.9)" @click.stop="drawer = !drawer">Home</a></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile @click="">
@@ -57,15 +57,16 @@
               <h3>Forecast</h3>
               <div id="infoContainer">
                 <div id="leftInfo">
-                  <p>Yesterday:</p>
-                  <img src="../images/logo.png" height="50px" width="50px"></img>
-                </div>
-                <div id="middleInfo">
                   <p>Today:</p>
                   <img src="../images/logo.png" height="50px" width="50px"></img>
                 </div>
-                <div id="rightInfo">
+                <div id="middleInfo">
                   <p>Tomorrow:</p>
+                  <img src="../images/logo.png" height="50px" width="50px"></img>
+                </div>
+                <div id="rightInfo">
+                  <p>Day two:</p>
+                  <p>{{valueList[2]}}</p>
                   <img src="../images/logo.png" height="50px" width="50px"></img>
                 </div>
               </div>
@@ -92,7 +93,11 @@ export default {
     tileLayer: null,
     lat: 52.25,
     long: 21.00,
-    zoom: 3.9
+    zoom: 3.9,
+
+      events: null,
+      url: 'http://api.apixu.com/v1/forecast.json?key=08a3949c85ea4120ac195310192703&q=Oslo&days=3',
+      valueList: []
   }),
   props: {
     source: String
@@ -116,7 +121,7 @@ export default {
         var sfântugheorgheMarker = L.marker([45.86, 25.78]).addTo(this.map);
       },
       setCoords: function(lat, long, zoom) {
-        this.map.setView([lat,long], zoom);
+        this.map.flyTo([lat,long], zoom);
 
         this.tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
           maxZoom: 18,
@@ -124,7 +129,21 @@ export default {
           accessToken: 'pk.eyJ1Ijoia2FhYXNlbiIsImEiOiJjanRwZ2tmY2YwMDJnNGRxZGplMHZtdDJ3In0.TzTQ3C8LMcW8A1LIgyNYBg'
         })
         this.tileLayer.addTo(this.map);
+      },
+          getData: function(){
+            axios
+              .get(this.url)
+              .then(response => {
+                this.events = response.data.forecast.forecastday;
+                for(let i = 0; i < 3; i++){
+                  this.valueList.push(response.data.forecast.forecastday[i].day.maxtemp_c);
+                }
+
+            }).catch(error => console.log(error))
       }
+    },
+    created(){
+      this.getData();
     },
     mounted(){
       this.getMap();
