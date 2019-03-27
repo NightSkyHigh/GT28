@@ -57,15 +57,15 @@
               <h3>Forecast</h3>
               <div id="infoContainer">
                 <div id="leftInfo">
-                  <p>Today:</p>
+                  <p >Today</p>
                   <img src="../images/logo.png" height="50px" width="50px"></img>
                 </div>
                 <div id="middleInfo">
-                  <p>Tomorrow:</p>
+                  <p>{{getNameOfDay(1)}}</p>
                   <img src="../images/logo.png" height="50px" width="50px"></img>
                 </div>
                 <div id="rightInfo">
-                  <p>Day two:</p>
+                  <p>{{getNameOfDay(2)}}</p>
                   <p>{{valueList[2]}}</p>
                   <img src="../images/logo.png" height="50px" width="50px"></img>
                 </div>
@@ -135,15 +135,21 @@ export default {
               .get(this.url)
               .then(response => {
                 this.events = response.data.forecast.forecastday;
-                for(let i = 0; i < 3; i++){
+                for(let i = 0; i < response.data.forecast.forecastday.length; i++){
                   this.valueList.push(response.data.forecast.forecastday[i].day.maxtemp_c);
                 }
 
             }).catch(error => console.log(error))
+      },
+      getNameOfDay : function (offSet) {
+          let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+          let dt = new Date();
+          return weekday[dt.getDay()+offSet];
       }
     },
     created(){
       this.getData();
+      this.getNameOfDay();
     },
     mounted(){
       this.getMap();
